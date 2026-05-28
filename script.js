@@ -27,9 +27,9 @@ var myName = "Joseph";
 myName = "Derrick";
 console.log(myName);
 
-let person1 = "Omondi";// variable name can end with numeral but not start with
+let person1 = "Omondi"; // variable name can end with numeral but not start with
 console.log(person1);
-let _code = "Javascript";// Cannot start with a hyphen but underscore
+let _code = "Javascript"; // Cannot start with a hyphen but underscore
 console.log(_code)
 let myEmail; // Camel Case naming
 let my_user_email; // snake case naming
