@@ -86,3 +86,148 @@ let num2 = 5;
 console.log( --num2)
 console.log( num2 **3)
 
+// variables
+let x = "Kwanusu"
+// mnemonic names
+// let userName = "Kwanusu"
+// console.log(userName);
+
+// comparison operators
+// ==	Equal to	3 == 5  // false
+// !=	Not equal to	3 != 4  // true
+// ===	Strictly equal to	3 === "3"  // false
+// !==	Strictly not equal to   3 !== "3"  // true
+// >	Greater than	4 > 4  // false
+// <	Less than	3 < 3  // false
+// >=	Greater than or equal to	4 >= 4  // true
+// <=	Less than or equal to	3 <= 3  // true
+
+let a = 5, b = "5";
+console.log(a != b);
+
+for (let i = 1; i < 10; i++) {
+    console.log(i)
+}
+// 1 + 1 = 2
+// 2 + 1 = 3
+// 3 + 1 = 4
+// 4 + 1 = 5
+// 5 + 1 = 6
+// 6 + 1 = 7
+// 7 + 1 = 8
+// 8 + 1 = 9
+
+// ternary operator
+
+const userRole = "admin";
+let welcomeMessage; 
+if (userRole === "admin") {
+    welcomeMessage = "Welcome, Admin! Access granted."
+} else {
+    welcomeMessage = "Access denied. Please login to access the dashboard"
+}
+console.log(welcomeMessage)
+
+const customMessage = userRole === "admin" 
+? welcomeMessage = "Welcome, Admin! Access granted."
+: welcomeMessage = "Access denied. Please login to access the dashboard"
+console.log(welcomeMessage)
+
+// Logical and &&
+const isLoggedIn = true;
+const hasPremiumAccount = true;
+
+isLoggedIn && console.log("Welcome to your dashboard!")
+hasPremiumAccount && console.log("Showing premium ads-free videos.")
+
+
+// Logical or || 
+const userName = "";
+const displayName = userName || "Guest";
+console.log(`welcome back, ${displayName}!`)
+
+let trafficLights = "black";
+let message = "";
+switch (trafficLights) {
+    case "red": 
+        message = "Stop immediately."
+        break;
+    case "yellow":
+        message = "Prepare to stop." 
+        break;
+    case "green":
+        message = "Continue driving."
+        break;
+    default: 
+        message = "Invalid traffic light color."           
+}
+console.log(message)
+
+// let number1 = Number(prompt("Enter the value of number1: "));
+// let number2 = Number(prompt("Enter the value of number2: "));
+
+// // take user input to select an operator 
+// const operator = prompt("Enter a operator ( either +, -, * or / ): ");
+
+// switch(operator) {
+
+//     case "+":
+//         result = number1 + number2;
+//         console.log(`${number1} + ${number2} = ${result}`);
+//         break;
+
+//     case "-":
+//         result = number1 - number2;
+//         console.log(`${number1} - ${number2} = ${result}`);
+//         break;
+
+//     case "*":
+//         result = number1 * number2;
+//         console.log(`${number1} * ${number2} = ${result}`);
+//         break;
+
+//     case "/":
+//         result = number1 / number2;
+//         console.log(`${number1} / ${number2} = ${result}`);
+//         break;
+
+//     default:
+//         console.log("Invalid operator");
+// }
+
+// Events
+number = 10;
+document.getElementById("output").innerHTML = 
+"The number is : " + number;
+
+function submit() {
+    alert("Button was clicked!")
+}
+const btn = document.getElementById("subscribe")
+function subscribe() {
+    btn.addEventListener('click', () => {
+        alert("Thanks for subscribing!")
+    })
+}
+subscribe();
+
+document.cookie = "username=JasonMacharia, theme=dark";
+console.log(document.cookie)
+
+function createCookie() {
+    const key = "session_token";
+    const value = "xyz234547675abc";
+    const maxAge = "max-age=" + 3600;
+    const path = "path=/"
+    const security = "Secure; SameSite=Lax";
+    
+    document.cookie = `${key}=${value}; ${maxAge}; ${path}; ${security}`
+
+    console.log("Cookie created successfully!")
+}
+createCookie();
+
+{let x = 5;
+    // console.log(x)
+}
+console.log(x)

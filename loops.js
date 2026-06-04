@@ -1,211 +1,198 @@
-// In JavaScript, the for loop is used for iterating over a block of code a certain number of times, 
-// or to iterate over the elements of an array.
 
-/*
-The syntax of the for loop is:
+/* ==========================================================================
+   MODULE: JAVASCRIPT CONTROL FLOW (LOOPS & JUMPS)
+   ========================================================================== */
 
-for (initialExpression; condition; updateExpression) {
-    // for loop body
-}
-Here,
+/* --------------------------------------------------------------------------
+   1. THE FOR LOOP
+   --------------------------------------------------------------------------
+   In JavaScript, the for loop is used for iterating over a block of code 
+   a certain number of times, or to iterate over the elements of an array.
 
-1. initialExpression - Initializes a counter variable.
-2. condition - The condition to be evaluated. If true, the body of the for loop is executed.
-3. updateExpression - Updates the value of initialExpression.
-4. Once an iteration of the loop is completed, the condition is evaluated again. The process continues until the condition is false.
+   Syntax:
+   for (initialExpression; condition; updateExpression) {
+       // for loop body
+   }
+
+   How it works:
+   1. initialExpression - Initializes a counter variable.
+   2. condition - Evaluated before every iteration. If true, the body runs.
+   3. updateExpression - Updates the counter variable after the body runs.
+   4. Condition is re-evaluated. The process continues until the condition is false.
 */
 
+// Example 1.1: Basic Counter Loop
 for (let i = 1; i < 6; i++) {
-    console.log(i)
+    console.log(i);
 }
 
-// program to display the sum of natural numbers
+// Example 1.2: Program to display the sum of natural numbers
+let naturalSum = 0;
+const maxN = 100;
 
-let sum = 0;
-const n = 100
-
-// loop from i = 1 to i = n
-// in each iteration, i is increased by 1
-for (let i = 1; i <= n; i++) {
-    sum += i;  // sum = sum + i
+// Loop from i = 1 to i = maxN. In each iteration, i increases by 1
+for (let i = 1; i <= maxN; i++) {
+    naturalSum += i;  // short for: naturalSum = naturalSum + i
 }
+console.log(`Sum of natural numbers: ${naturalSum}`); // Output: sum: 5050
 
-console.log(`sum: ${sum}`);
-
-// Output: sum: 5050
-
+// Example 1.3: Iterating through an Array
 const fruits = ["apple", "banana", "cherry"];
-
 for (let i = 0; i < fruits.length; i++) {
     console.log(fruits[i]);
 }
 
-/*
-The while loop repeatedly executes a block of code as long as a specified condition is true.
 
-The syntax of the while loop is:
+/* --------------------------------------------------------------------------
+   2. THE WHILE LOOP
+   --------------------------------------------------------------------------
+   The while loop repeatedly executes a block of code as long as a 
+   specified condition evaluates to true.
 
-while (condition) {
-    // body of loop
-}
-Here,
+   Syntax:
+   while (condition) {
+       // body of loop
+   }
 
-1. The while loop first evaluates the condition inside ( ).
-2. If the condition evaluates to true, the code inside { } is executed.
-3. Then, the condition is evaluated again.
-4. This process continues as long as the condition evaluates to true.
-5. If the condition evaluates to false, the loop stops.
+   How it works:
+   1. The while loop first evaluates the condition inside ( ).
+   2. If true, the code inside { } is executed.
+   3. The condition is evaluated again.
+   4. This process continues as long as the condition remains true.
+   5. If the condition becomes false, the loop terminates.
 */ 
 
-let i = 1;
-while (i < 4) {
-    console.log(i);
-    i += 1;
+// Example 2.1: Simple Counter
+let whileCounter = 1;
+while (whileCounter < 4) {
+    console.log(whileCounter);
+    whileCounter += 1;
 }
 
-// Loop to print positive numbers
+// Example 2.2: Accumulating user inputs dynamically
+let positiveSum = 0;
+let currentNum = 0;
 
-let num = 0, sum = 0;
+// Loop as long as currentNum is 0 or positive
+while (currentNum >= 0) {
+    // Add positive number to accumulator
+    positiveSum += currentNum;
 
-// loop as long as num is 0 or positive
-while (num >= 0) {
-
-    // add all positive numbers
-    sum += num;
-
-    // take input from the user
-    num = parseInt(prompt("Enter a number: "));
+    // Grab fresh terminal/browser input from the user
+    currentNum = parseInt(prompt("Enter a number (negative to stop): "));
 }
+console.log(`The sum of positive inputs is: ${positiveSum}`);
 
-// last, display sum
-console.log(`The sum is ${sum}`);
 
-/*
-The do...while loop executes a block of code once, then repeatedly executes it as long as the specified condition is true.
+/* --------------------------------------------------------------------------
+   3. THE DO...WHILE LOOP
+   --------------------------------------------------------------------------
+   The do...while loop executes its block of code ONCE first, then 
+   repeatedly executes it as long as the condition is true.
 
-The syntax of the do...while loop is:
+   Syntax:
+   do {
+       // body of loop
+   } while(condition);
 
-do {
-    // body of loop
-} while(condition);
-
-Here,
-
-1. The do…while loop executes the code inside { }.
-2. Then, it evaluates the condition inside ( ).
-3. If the condition evaluates to true, the code inside { } is executed again.
-4. This process continues as long as the condition evaluates to true.
-5. If the condition evaluates to false, the loop terminates.
+   How it works:
+   1. The do…while loop executes the code inside { } immediately.
+   2. Then, it evaluates the condition inside ( ).
+   3. If true, the code inside { } executes again.
+   4. If false, the loop terminates. Guaranteed to execute at least once!
 */ 
 
-let i = 3;
-
-// do...while loop
+// Example 3.1: Countdown execution
+let countdown = 3;
 do {
-    console.log(i);
-    i--;
-} while (i > 0);
+    console.log(countdown);
+    countdown--;
+} while (countdown > 0);
 
-let sum = 0, num = 0;
+// Example 3.2: User input tracking (Guaranteed single run)
+let doWhileSum = 0; 
+let inputNum = 0; 
 
 do {
+    // Add the current input to the running sum
+    doWhileSum += inputNum;
 
-    // add all positive numbers
-    sum += num;
+    // Prompt user for interactive entry
+    inputNum = parseInt(prompt("Enter a number to add (negative to stop): "));
+} while (inputNum >= 0);
 
-    // take input from the user
-    num = parseInt(prompt("Enter a number: "));
-
-    // loop terminates if num is negative
-} while (num >= 0);
-
-// last, display sum
-console.log(`The sum is ${sum}`);
-
-// The break statement terminates the loop immediately when it's encountered.
+console.log(`The do...while sum is ${doWhileSum}`);
 
 
-// infinite loop because condition is always true
+/* --------------------------------------------------------------------------
+   4. THE BREAK STATEMENT
+   --------------------------------------------------------------------------
+   The break statement terminates the loop execution immediately when 
+   it is encountered, shifting control flow straight to the next block after the loop.
+*/
+
+// Example 4.1: Breaking an infinite loop via sentinel value
 while (true) {
+    let rawInput = Number(prompt("Enter a number (0 to break infinite loop): "));
 
-    // get number input from user
-    let num = Number(prompt("Enter a number: "));
-
-    // break condition
-    if (num == 0) {
-        break;
+    // Break condition
+    if (rawInput === 0) {
+        break; 
     }
-
-    console.log(num);
+    console.log(`You typed: ${rawInput}`);
 }
 
-// Program to print the value of i
-
-// Break with for loop
-
-for (let i = 1; i <= 5; i++) {
-
-    // break condition     
-    if (i == 3) {
+// Example 4.2: Break with for loop
+for (let k = 1; k <= 5; k++) {
+    // Break early if loop counter matches criteria    
+    if (k === 3) {
         break;
     }
-
-    console.log(i);
+    console.log(`k value: ${k}`); // Prints 1, 2
 }
 
-// Break with while loop
+// Example 4.3: Accumulating values inside an intentional infinite loop
+let breakSum = 0;
 
-// Program to find the sum of positive numbers
-// the while loop runs infinitely
-// loop terminates only when user enters a negative number
-
-let sum = 0;
-
-// infinite loop
 while (true) {
+    let processNum = Number(prompt("Enter a number to add (negative to break): "));
 
-    // get number input
-    let num = Number(prompt("Enter a number: "));
-
-    // terminate the loop if num is negative
-    if (num < 0)
+    // Terminate the loop instantly if value is negative
+    if (processNum < 0) {
         break;
-    }
-
-    // otherwise, add num to sum
-    else {
-        sum += num;
+    } else {
+        breakSum += processNum;
     }
 }
+console.log(`Sum via break optimization: ${breakSum}`);
 
-// print the sum
-console.log(`Sum: ${sum}`);
 
-// The continue statement skips the current iteration of the loop and proceeds to the next iteration.
+/* --------------------------------------------------------------------------
+   5. THE CONTINUE STATEMENT
+   --------------------------------------------------------------------------
+   The continue statement skips the remainder of the current iteration 
+   and proceeds straight to the evaluation step of the next iteration.
+*/
 
-// continue with for loop
-
+// Example 5.1: Continue with for loop (Value skipping)
 for (let i = 1; i <= 10; ++i) {
-
-    // skip iteration if value of
-    // i is between 4 and 9
+    // Skip loop body execution if i values are bounded between 4 and 9
     if (i > 4 && i < 9) {
-        continue;
+        continue; // control jumps right to ++i
     }
-    console.log(i);
+    console.log(`i value: ${i}`);
 }
 
-// continue with while loop 
-var num = 1;
+// Example 5.2: Continue with while loop (Filtering even numbers)
+let oddFilterNum = 1;
 
-while (num <= 10) {
-
-    // skip iteration if num is even
-    if (num % 2 === 0) {
-        ++num;
-        continue;
+while (oddFilterNum <= 10) {
+    // Skip remainder of iteration logic if number is even
+    if (oddFilterNum % 2 === 0) {
+        oddFilterNum++; // Critical counter shift before jumping to prevent hang
+        continue;       // Jump back up to validation step
     }
 
-    console.log(num);
-    ++num;
+    console.log(`Odd number: ${oddFilterNum}`);
+    oddFilterNum++;
 }
