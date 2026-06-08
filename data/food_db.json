@@ -1,0 +1,23 @@
+{
+  "foods": [
+    { "id": 1, "name": "Apple", "calories": 95 },
+    { "id": 2, "name": "Banana", "calories": 105 },
+    { "id": 3, "name": "Chicken Breast (100g)", "calories": 165 },
+    { "id": 4, "name": "White Rice (1 cup)", "calories": 205 },
+    { "id": 5, "name": "Avocado", "calories": 240 },
+    { "id": 6, "name": "Egg (Large)", "calories": 78 },
+    { "id": 7, "name": "Oatmeal (1 cup)", "calories": 150 },
+    { "id": 8, "name": "Almonds (28g)", "calories": 164 },
+    { "id": 9, "name": "Atlantic Salmon Filet (150g)", "calories": 310 },
+    { "id": 10, "name": "Hass Avocado (Medium)", "calories": 240 },
+    { "id": 11, "name": "Organic Quick Oats (1 cup)", "calories": 150 },
+    { "id": 12, "name": "Boneless Skinless Chicken Breast (100g)", "calories": 165 },
+    { "id": 13, "name": "Brown Basmati Rice (1 cup cooked)", "calories": 215 },
+    { "id": 14, "name": "Large Cage-Free Egg", "calories": 78 },
+    { "id": 15, "name": "Raw Unsalted Almonds (28g)", "calories": 164 },
+    { "id": 16, "name": "Greek Yogurt Whole Milk Plain (150g)", "calories": 140 },
+    { "id": 17, "name": "Sweet Potato Baked (Medium)", "calories": 105 },
+    { "id": 18, "name": "Whey Protein Isolate Blend (1 Scoop)", "calories": 120 }
+
+    ]
+}

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Rick and Morty Characters</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#1e1e1e] text-white text-center font-sans min-h-screen">
+
+  <h1 class="text-3xl font-bold mt-8 mb-4">Rick and Morty Characters</h1>
+
+  <input 
+    type="text" 
+    id="search" 
+    placeholder="Search characters by name..." 
+    class="px-4 py-2 w-64 rounded-lg border-none focus:outline-none text-black mb-6"
+  />
+
+  <div 
+    id="character-list" 
+    class="flex flex-wrap justify-center gap-4 px-4"
+  ></div>
+<script src="rick.js"></script>
+<script src="character.js"></script>
+</body>
+</html>

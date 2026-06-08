@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CalorieTracker Core // Fetch Sandbox</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        
+        .theme-transition, .theme-transition * {
+            transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out;
+        }
+    </style>
+</head>
+<body id="app-body" class="theme-transition bg-stone-950 text-stone-100 min-h-screen font-sans antialiased selection:bg-amber-500/30 selection:text-amber-200">
+
+    <div class="max-w-5xl mx-auto px-4 py-8">
+        <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 pb-5 border-b border-stone-800" id="app-header">
+            <div>
+                <div class="flex items-center gap-2.5">
+                    <h1 class="text-2xl font-black tracking-tight text-stone-50" id="logo-text">Calorie<span class="text-amber-500">Tracker</span></h1>
+                    <span id="badge-ui" class="bg-amber-500/10 text-amber-400 text-[10px] font-black px-2 py-0.5 rounded border border-amber-500/20 uppercase tracking-wider">HTTP-Fetch-Engine</span>
+                </div>
+                <p id="sub-header-text" class="text-xs text-stone-400 mt-1 tracking-wide font-medium">Asynchronous HTTP Fetch pipeline simulation matrix.</p>
+            </div>
+            <div class="flex items-center gap-3 w-full sm:w-auto">
+                <button id="theme-toggle-btn" class="w-full sm:w-auto text-xs font-bold uppercase tracking-wider bg-stone-900 border border-stone-800 hover:border-amber-500 text-stone-200 px-4 py-2.5 rounded-lg flex items-center justify-center gap-2 active:scale-[0.98]">
+                    <i id="theme-icon" class="fa-solid fa-moon"></i> <span id="theme-text">Dark Mode</span>
+                </button>
+                <button id="reset-day-btn" class="w-full sm:w-auto text-xs font-bold uppercase tracking-wider bg-stone-900/60 border border-stone-800 hover:text-red-400 hover:border-red-500/40 px-4 py-2.5 rounded-lg active:scale-[0.98] text-stone-300">
+                    Clear Ledger
+                </button>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <div class="lg:col-span-1 space-y-6">
+                
+                <section id="metric-card" class="bg-stone-900 border border-stone-800/80 rounded-xl p-6 shadow-xl relative overflow-hidden">
+                    <span id="metric-title" class="text-xs font-bold uppercase tracking-widest text-stone-400 block mb-2">Total Energy Intake</span>
+                    <div class="flex items-baseline gap-2">
+                        <span id="total-calories-display" class="text-5xl font-black text-amber-500 tracking-tighter">0</span>
+                        <span id="metric-unit" class="text-sm font-bold text-stone-500 uppercase tracking-wider">kcal</span>
+                    </div>
+
+                    <div class="mt-6">
+                        <div class="flex justify-between text-xs font-bold uppercase tracking-wider text-stone-400 mb-2" id="progress-text-row">
+                            <span>Daily Budget Target Utilization</span>
+                            <span id="progress-percent" class="font-mono text-amber-500">0%</span>
+                        </div>
+                        <div id="progress-track" class="w-full bg-stone-950 rounded-full h-3 border border-stone-800 overflow-hidden p-0.5">
+                            <div id="progress-bar-fill" class="bg-gradient-to-r from-amber-600 to-amber-400 h-1.5 rounded-full w-0 transition-all duration-500 ease-out"></div>
+                        </div>
+                    </div>
+
+                    <div id="metric-footer" class="grid grid-cols-2 gap-4 mt-6 pt-4 border-t border-stone-800 text-xs">
+                        <div>
+                            <span class="text-stone-400 block uppercase font-bold tracking-wider mb-0.5">Target Budget</span>
+                            <span class="font-mono font-bold text-stone-200" id="target-budget-display">2,500 kcal</span>
+                        </div>
+                        <div>
+                            <span class="text-stone-400 block uppercase font-bold tracking-wider mb-0.5">Log Multiplicity</span>
+                            <span id="entry-count-display" class="font-mono font-bold text-stone-200">0 items</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="form-card" class="bg-stone-900 border border-stone-800/80 rounded-xl p-5 shadow-lg">
+                    <h2 id="form-title" class="text-xs font-bold uppercase tracking-widest text-stone-400 mb-4">Custom Matrix Log Ingestion</h2>
+                    <form id="custom-food-form" class="space-y-4">
+                        <div>
+                            <label id="label-name" class="block text-[10px] font-bold uppercase tracking-widest text-stone-400 mb-1.5">Item Identifier Description</label>
+                            <input type="text" id="input-food-name" placeholder="e.g., Grilled Sirloin Steak" required max="50"
+                                   class="w-full bg-stone-950 border border-stone-800 focus:border-amber-500 rounded-lg px-4 py-2.5 text-sm text-stone-100 placeholder-stone-600 focus:outline-none transition-all duration-150">
+                        </div>
+                        <div>
+                            <label id="label-cal" class="block text-[10px] font-bold uppercase tracking-widest text-stone-400 mb-1.5">Energy Magnitude Value</label>
+                            <div class="relative">
+                                <input type="number" id="input-food-calories" placeholder="0" min="0" max="8000" required
+                                       class="w-full bg-stone-950 border border-stone-800 focus:border-amber-500 rounded-lg pl-4 pr-12 py-2.5 text-sm text-stone-100 placeholder-stone-600 focus:outline-none transition-all duration-150">
+                                <div id="inline-unit" class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-xs font-bold uppercase tracking-wider text-stone-400 font-mono">kcal</div>
+                            </div>
+                        </div>
+                        <button type="submit" id="submit-form-btn" class="w-full bg-amber-500 hover:bg-amber-600 text-stone-950 font-black py-3 rounded-lg text-xs uppercase tracking-widest transition-colors duration-150 transform active:scale-[0.99]">
+                            Commit Log Entry
+                        </button>
+                    </form>
+                </section>
+            </div>
+
+            <div class="lg:col-span-2 space-y-6">
+                
+                <section id="search-card" class="bg-stone-900 border border-stone-800/80 rounded-xl p-5 shadow-lg">
+                    <div class="flex justify-between items-center mb-3">
+                        <h2 id="search-title" class="text-xs font-bold uppercase tracking-widest text-stone-400 flex items-center gap-2">
+                            <span id="async-status-indicator" class="w-1.5 h-1.5 rounded-full bg-emerald-500 transition-colors"></span>
+                            Asynchronous Database Registry Lookup
+                        </h2>
+                        <div class="flex items-center gap-2">
+                            <span id="search-error-toast" class="text-[10px] font-bold uppercase text-red-500 tracking-wider hidden">HTTP Error</span>
+                            <span id="network-latency-toast" class="text-[10px] font-mono text-stone-400 tracking-wider transition-opacity duration-150 opacity-0">Querying Stream...</span>
+                        </div>
+                    </div>
+                    <div class="relative">
+    
+    <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-stone-500">
+        <i class="fa-solid fa-magnifying-glass text-xs"></i>
+    </div>
+
+    <input
+        type="text"
+        id="database-search-input"
+        autocomplete="off"
+        placeholder="Query records across unified lookup indexed streams..."
+        class="w-full bg-stone-950 border border-stone-800 focus:border-amber-500 rounded-lg pl-10 pr-4 py-3 text-sm text-stone-100 placeholder-stone-600 focus:outline-none transition-all duration-150"
+    >
+
+    <div
+        id="search-results-dropdown"
+        class="absolute top-full left-0 right-0 mt-2 bg-stone-900 border border-stone-800 rounded-lg shadow-2xl max-h-60 overflow-y-auto hidden z-50 divide-y divide-stone-800">
+    </div>
+
+</div>
+                    
+                </section>
+
+                <section id="ledger-card" class="bg-stone-900 border border-stone-800/80 rounded-xl p-5 shadow-lg">
+                    <h2 id="ledger-title" class="text-xs font-bold uppercase tracking-widest text-stone-400 mb-4">Active Allocation Ledger</h2>
+                    <ul id="active-ledger-hook-root" class="space-y-2.5 max-h-[460px] overflow-y-auto pr-1">
+                        </ul>
+                </section>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="calorie.js"></script>
+</body>
+</html>
