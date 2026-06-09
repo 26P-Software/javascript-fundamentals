@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zindua Tech Demo: jQuery in Action</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 min-height-screen p-8">
+
+    <div class="max-w-4xl mx-auto">
+        <header class="flex justify-between items-center mb-8 pb-4 border-b border-gray-200">
+            <div>
+                <h1 class="text-2xl font-semibold text-gray-900">Inventory Catalog</h1>
+                <p class="text-sm text-gray-500">Live technical demonstration of jQuery DOM manipulation</p>
+            </div>
+            <div class="relative bg-white border border-gray-200 px-4 py-2 rounded-lg shadow-sm">
+                <span class="text-gray-600">Selected Items:</span>
+                <span id="cart-count" class="ml-2 bg-[#fe3448] text-white text-xs font-medium px-2 py-1 rounded-full">0</span>
+            </div>
+        </header>
+
+        <div id="notification-toast" class="hidden mb-6 p-4 bg-green-50 border border-green-200 text-green-700 rounded-lg shadow-sm">
+            <p id="notification-text" class="text-sm font-medium"></p>
+        </div>
+
+        <div class="bg-white border border-gray-200 p-4 rounded-xl shadow-sm mb-6 flex flex-col sm:flex-row gap-4 justify-between items-center">
+            <div class="flex gap-2" id="category-filters">
+                <button data-category="all" class="filter-btn bg-[#fe3448] text-white px-4 py-2 rounded-lg text-sm transition-colors">All Products</button>
+                <button data-category="electronics" class="filter-btn bg-gray-100 text-gray-600 hover:bg-gray-200 px-4 py-2 rounded-lg text-sm transition-colors">Electronics</button>
+                <button data-category="clothing" class="filter-btn bg-gray-100 text-gray-600 hover:bg-gray-200 px-4 py-2 rounded-lg text-sm transition-colors">Clothing</button>
+            </div>
+            <div class="w-full sm:w-64">
+                <input type="text" id="search-input" placeholder="Search catalog..." class="w-full border border-gray-300 px-3 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#fe3448] focus:border-transparent">
+            </div>
+        </div>
+
+        <main id="product-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div id="catalog-loader" class="hidden col-span-full text-center py-12">
+                <p class="text-gray-500 text-sm animate-pulse">Querying remote resource catalog...</p>
+            </div>
+
+            <div class="product-card bg-white border border-gray-200 p-5 rounded-xl shadow-sm flex flex-col justify-between" data-category="electronics">
+                <div>
+                    <span class="text-xs font-semibold uppercase tracking-wider text-blue-600">Electronics</span>
+                    <h3 class="text-lg font-medium text-gray-900 mt-1 product-title">Wireless Headphones</h3>
+                    <p class="text-sm text-gray-500 mt-2">Premium over-ear noise-cancelling headphones.</p>
+                </div>
+                <div class="flex justify-between items-center mt-6">
+                    <span class="text-xl font-semibold text-gray-900">$249</span>
+                    <button class="add-to-cart-btn border border-[#fe3448] text-[#fe3448] hover:bg-[#fe3448] hover:text-white px-3 py-1.5 rounded-lg text-xs transition-colors">Select Item</button>
+                </div>
+            </div>
+
+            <div class="product-card bg-white border border-gray-200 p-5 rounded-xl shadow-sm flex flex-col justify-between" data-category="clothing">
+                <div>
+                    <span class="text-xs font-semibold uppercase tracking-wider text-orange-600">Clothing</span>
+                    <h3 class="text-lg font-medium text-gray-900 mt-1 product-title">Minimalist Backpack</h3>
+                    <p class="text-sm text-gray-500 mt-2">Waterproof commuter canvas bag with laptop sleeve.</p>
+                </div>
+                <div class="flex justify-between items-center mt-6">
+                    <span class="text-xl font-semibold text-gray-900">$85</span>
+                    <button class="add-to-cart-btn border border-[#fe3448] text-[#fe3448] hover:bg-[#fe3448] hover:text-white px-3 py-1.5 rounded-lg text-xs transition-colors">Select Item</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        // Execution safely wrapped inside Document Ready block
+        $(document).ready(function() {
+            
+            // Shared State Variables
+            let selectedItemCount = 0;
+
+            // Mock External API Data Source
+            const mockCatalogDatabase = {
+                electronics: [
+                    { name: "Mechanical Keyboard", desc: "Tactile brown switches with custom keycaps.", price: 120 },
+                    { name: "UltraWide Monitor", desc: "34-inch curved productivity screen.", price: 450 }
+                ],
+                clothing: [
+                    { name: "Merino Wool Sweater", desc: "Breathable thermal wear for colder climates.", price: 110 },
+                    { name: "Raw Denim Jeans", desc: "Slim-fit durable selvedge casual wear.", price: 140 }
+                ]
+            };
+
+            // ====== DEMO SCENARIO 1: LIVE SEARCH (Text Input Mapping) ======
+            $('#search-input').on('keyup', function() {
+                const searchString = $(this).val().toLowerCase().trim();
+
+                $('.product-card').each(function() {
+                    const productTitle = $(this).find('.product-title').text().toLowerCase();
+                    
+                    // Conditional filtering loop
+                    if (productTitle.includes(searchString)) {
+                        $(this).fadeIn(200); // Smooth jQuery opacity transition
+                    } else {
+                        $(this).fadeOut(200);
+                    }
+                });
+            });
+
+            // ====== DEMO SCENARIO 2: EVENT DELEGATION & ASYNC RENDERING ======
+            $('.filter-btn').on('click', function() {
+                const selectedCategory = $(this).data('category');
+
+                // Visual class toggle update
+                $('.filter-btn').removeClass('bg-[#fe3448] text-white').addClass('bg-gray-100 text-gray-600');
+                $(this).removeClass('bg-gray-100 text-gray-600').addClass('bg-[#fe3448] text-white');
+
+                // Base Case: Reset display to show initial static markup if "All" is selected
+                if (selectedCategory === 'all') {
+                    $('.product-card').slideDown(300);
+                    return;
+                }
+
+                // Simulate Network Latency Request to append data dynamically
+                $('.product-card').hide(); // Instantly hide current elements
+                $('#catalog-loader').slideDown(150); // Reveal loading text
+
+                setTimeout(function() {
+                    $('#catalog-loader').hide();
+                    
+                    // Safely isolate/remove elements from previous selections to avoid duplications
+                    $('.dynamically-added').remove();
+
+                    // Retrieve scoped entries from database
+                    const fetchedItems = mockCatalogDatabase[selectedCategory] || [];
+
+                    // Iteration and DOM Generation Sequence
+                    fetchedItems.forEach(function(item) {
+                        const themeColor = selectedCategory === 'electronics' ? 'text-blue-600' : 'text-orange-600';
+                        
+                        // Construct the HTML payload string cleanly
+                        const newProductCard = `
+                            <div class="product-card dynamically-added bg-white border border-gray-200 p-5 rounded-xl shadow-sm flex flex-col justify-between" data-category="${selectedCategory}" style="display: none;">
+                                <div>
+                                    <span class="text-xs font-semibold uppercase tracking-wider ${themeColor}">${selectedCategory}</span>
+                                    <h3 class="text-lg font-medium text-gray-900 mt-1 product-title">${item.name}</h3>
+                                    <p class="text-sm text-gray-500 mt-2">${item.desc}</p>
+                                </div>
+                                <div class="flex justify-between items-center mt-6">
+                                    <span class="text-xl font-semibold text-gray-900">$${item.price}</span>
+                                    <button class="add-to-cart-btn border border-[#fe3448] text-[#fe3448] hover:bg-[#fe3448] hover:text-white px-3 py-1.5 rounded-lg text-xs transition-colors">Select Item</button>
+                                </div>
+                            </div>
+                        `;
+
+                        // Append template string execution into container node and animate appearance
+                        $('#product-grid').append(newProductCard);
+                        $('.dynamically-added').fadeIn(300);
+                    });
+
+                }, 800); // 800ms mock delay
+            });
+
+            // ====== DEMO SCENARIO 3: BUBBLING INTERCEPTION (Global Delegate) ======
+            // Crucial: Binds to static parent #product-grid to handle clicks on dynamically injected buttons
+            $('#product-grid').on('click', '.add-to-cart-btn', function() {
+                // Access individual instance contextual element values
+                const parentCard = $(this).closest('.product-card');
+                const matchedItemName = parentCard.find('.product-title').text();
+
+                // State Increment
+                selectedItemCount++;
+                
+                // Update tracking node textContent fluidly
+                $('#cart-count').text(selectedItemCount);
+
+                // Toast Feedback Slide Trigger Integration
+                $('#notification-text').text(`Successfully updated log cache: Selected "${matchedItemName}"`);
+                $('#notification-toast').slideDown(250).delay(2500).slideUp(250);
+            });
+        });
+    </script>
+</body>
+</html>
